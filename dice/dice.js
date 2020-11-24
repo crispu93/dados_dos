@@ -149,7 +149,7 @@
         return Math.pow(2, Math.floor(Math.log(approx) / Math.log(2)));
     }
 
-    this.create_dice_materials = function(face_labels, size, margin) {
+    this.create_dice_materials = function(face_labels, size, margin, col) {
         function create_text_texture(text, color, back_color) {
             if (text == undefined) return null;
             var canvas = document.createElement("canvas");
@@ -173,7 +173,7 @@
         var materials = [];
         for (var i = 0; i < face_labels.length; ++i)
             materials.push(new THREE.MeshPhongMaterial($t.copyto(this.material_options,
-                        { map: create_text_texture(face_labels[i], this.label_color, this.dice_color) })));
+                        { map: create_text_texture(face_labels[i], this.label_color, col) })));
         return materials;
     }
 
@@ -281,7 +281,7 @@
     this.label_color = '#aaaaaa';
     this.dice_color = '#202020';
     this.ambient_light_color = 0xf0f5fb;
-    this.spot_light_color = 0xefdfd5;
+    this.spot_light_color =  '#96949A';
     this.selector_back_colors = { color: 0x404040, shininess: 0, emissive: 0x858787 };
     this.desk_color = 0xdfdfdf;
     this.use_shadows = true;
@@ -294,35 +294,39 @@
 
     this.scale = 50;
 
+    let col1 = '#ab0b26';
+    let col2 = '#248995';
+    let col3 = '#248995';
+
     this.create_d1 = function() {
         if (!this.d2_geometry) this.d2_geometry = this.create_d2_geometry(this.scale * 1.9);
         /*if (!this.dice_material)*/ this.dice_material = new THREE.MeshFaceMaterial(
-                this.create_dice_materials(this.standart_d20_dice_face_labels1, this.scale / 2, 1.0));
+                this.create_dice_materials(this.standart_d20_dice_face_labels1, this.scale / 2, 1.0, col1));
         return new THREE.Mesh(this.d2_geometry, this.dice_material);
     }
 
     this.create_d2 = function() {
         if (!this.d2_geometry) this.d2_geometry = this.create_d2_geometry(this.scale * 0.9);
         /*if (!this.dice_material)*/ this.dice_material = new THREE.MeshFaceMaterial(
-                this.create_dice_materials(this.standart_d20_dice_face_labels2, this.scale / 2, 1.0));
+                this.create_dice_materials(this.standart_d20_dice_face_labels2, this.scale / 2, 1.0, col2));
         return new THREE.Mesh(this.d2_geometry, this.dice_material);
     }
 
     this.create_d3 = function() {
         if (!this.d2_geometry) this.d2_geometry = this.create_d2_geometry(this.scale * 0.9);
         /*if (!this.dice_material)*/ this.dice_material = new THREE.MeshFaceMaterial(
-                this.create_dice_materials(this.standart_d20_dice_face_labels3, this.scale / 2, 1.0));
+                this.create_dice_materials(this.standart_d20_dice_face_labels3, this.scale / 2, 1.0, col3));
         return new THREE.Mesh(this.d2_geometry, this.dice_material);
     }
 
     this.create_d10 = function() {
         if (!this.d10_geometry) this.d10_geometry = this.create_d10_geometry(this.scale * 0.9);
         /*if (!this.dice_material)*/ this.dice_material = new THREE.MeshFaceMaterial(
-                this.create_dice_materials(this.standart_d20_dice_face_labels, this.scale / 2, 1.0));
+                this.create_dice_materials(this.standart_d20_dice_face_labels, this.scale / 2, 1.0, col4));
         return new THREE.Mesh(this.d10_geometry, this.dice_material);
     }
 
-    this.create_d12 = function() {
+    /*this.create_d12 = function() {
         if (!this.d12_geometry) this.d12_geometry = this.create_d12_geometry(this.scale * 0.9);
         if (!this.dice_material) this.dice_material = new THREE.MeshFaceMaterial(
                 this.create_dice_materials(this.standart_d20_dice_face_labels, this.scale / 2, 1.0));
@@ -341,7 +345,7 @@
         if (!this.d100_material) this.d100_material = new THREE.MeshFaceMaterial(
                 this.create_dice_materials(this.standart_d100_dice_face_labels, this.scale / 2, 1.5));
         return new THREE.Mesh(this.d10_geometry, this.d100_material);
-    }
+    }*/
 
     this.parse_notation = function(notation) {
         var no = notation.split('@');
